@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35919.96 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rolbazli.API", "Rolbazli.API\Rolbazli.API.csproj", "{8DD38323-F3FF-4996-8AEC-5758FCA6578A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoleBazli.Data", "RoleBazli.Data\RoleBazli.Data.csproj", "{C7B053DB-2F8B-4199-8AA8-4E98D53B3417}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoleBazli.Model", "RoleBazli.Model\RoleBazli.Model.csproj", "{6C4F397D-EAAE-4C5E-A5D0-4C608277CD51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8DD38323-F3FF-4996-8AEC-5758FCA6578A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD38323-F3FF-4996-8AEC-5758FCA6578A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DD38323-F3FF-4996-8AEC-5758FCA6578A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7B053DB-2F8B-4199-8AA8-4E98D53B3417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B053DB-2F8B-4199-8AA8-4E98D53B3417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B053DB-2F8B-4199-8AA8-4E98D53B3417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B053DB-2F8B-4199-8AA8-4E98D53B3417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4F397D-EAAE-4C5E-A5D0-4C608277CD51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4F397D-EAAE-4C5E-A5D0-4C608277CD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4F397D-EAAE-4C5E-A5D0-4C608277CD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4F397D-EAAE-4C5E-A5D0-4C608277CD51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
