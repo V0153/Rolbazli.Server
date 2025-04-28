@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Rolbazli.API.DTOs;
 using RoleBazli.Model.Models;
@@ -137,6 +138,28 @@ namespace Rolbazli.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        [HttpGet("user-detail")]
+        public async Task<ActionResult<List<UserDetailDTO>>> GetUserDetail()
+        {
+            var users = await _userManager.Users.ToListAsync();  // User tim kullanıcıları veri tabanından alır.
+
+            var userDetails = new List<UserDetailDTO>(); // Kullanıcı DTO'ları için bir liste oluşturulur.
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userDetails.Add(new UserDetailDTO
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FullName = user.FullName,
+                    Roles = roles.ToArray()
+                });
+            }
+
+            return Ok(userDetails);
         }
     }
 }
