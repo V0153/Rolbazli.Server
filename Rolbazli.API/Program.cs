@@ -59,6 +59,23 @@ builder.Services.AddSwaggerGen(x=>
         Type = SecuritySchemeType.ApiKey, //Token'ýn bir API anahtarý olduðunu belirtelim.Güvenlik þemasý tipi.
         Scheme = "Bearer" //Token'ýn Bearer þemasýnda olduðunu belirtelim.
     });
+    x.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme //bearer þemasýný referans alýyoruz.
+            {
+                Reference = new OpenApiReference  //Swagger'a daha önce tanýmladýýmýz "Bearer" güvenlik tanýmýný referans almasýný söylüyoruz.
+                {
+                    Type = ReferenceType.SecurityScheme,  // bu bir güvenlik þemasý referansýdýr.
+                    Id = "Bearer"
+                },
+                Scheme = "Bearer", //header'da kullanýllan isim
+                Name = "Bearer",
+                In = ParameterLocation.Header //token'ýn gönderileceði yer: Header
+            },
+            new List<string>()
+        }
+    });
 });
 
 var app = builder.Build();
