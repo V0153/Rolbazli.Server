@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using RoleBazli.Model.Models;
 
 namespace Rolbazli.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -23,7 +25,7 @@ namespace Rolbazli.API.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
         }
-
+        [AllowAnonymous]
         [HttpPost("register")]
         //post isteği: api/account/register
         public async Task<ActionResult<string>> Register(RegisterDTO registerDTO)
@@ -68,7 +70,7 @@ namespace Rolbazli.API.Controllers
                 Message = "Hesabınız başarıyla oluşturuldu."
             });
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         //post isteği: api/account/login
         public async Task<ActionResult<AuthResponseDTO>> Login(LoginDTO loginDTO)
@@ -139,7 +141,6 @@ namespace Rolbazli.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-
         [HttpGet("user-detail")]
         public async Task<ActionResult<List<UserDetailDTO>>> GetUserDetail()
         {
@@ -155,11 +156,40 @@ namespace Rolbazli.API.Controllers
                     Id = user.Id,
                     Email = user.Email,
                     FullName = user.FullName,
-                    Roles = roles.ToArray()
+                    Roles = roles.ToArray(),
+                    PhoneNumber = user.PhoneNumber,
+                    PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                    AccessFailedCount = user.AccessFailedCount
                 });
             }
 
             return Ok(userDetails);
         }
+
+        [HttpGet("users")]
+        public async Task<ActionResult<IEnumerable<UserDetailDTO>>> GetAllUsers()
+        {
+            // 1. Adım: Önce tüm kullanıcıları çek
+            var users = await _userManager.Users.ToListAsync();
+
+            // 2. Adım: Kullanıcı DTO'larını oluştur
+            var userDtos = new List<UserDetailDTO>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                userDtos.Add(new UserDetailDTO
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FullName = user.FullName,
+                    Roles = roles.ToArray()
+                });
+            }
+
+            return Ok(userDtos);
+        }
+
     }
 }
